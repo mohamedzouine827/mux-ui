@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -23,7 +22,7 @@ const Page: React.FC = () => {
         }));
     };
 
-    const buttonCode = `
+    const buttonCodePreview = `
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -99,62 +98,84 @@ export default function Badge({
 </Badge>
     `.trim();
 
-    const renderSection = (section: keyof typeof showCodeStates, title: string, description: string) => (
-        <section className="space-y-8">
-            <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-white">{title}</h2>
-                <p className="text-lg text-zinc-300">{description}</p>
-            </div>
-            <div className="space-y-6">
-                <div className="flex flex-row justify-between border-b border-zinc-700">
-                    <div className='flex flex-row gap-8'>
-                        <button
-                            className={`text-base pb-2 ${!showCodeStates[section] ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
-                            onClick={() => toggleCodeView(section)}
-                        >
-                            Preview
-                        </button>
-                        <button
-                            className={`text-base pb-2 ${showCodeStates[section] ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
-                            onClick={() => toggleCodeView(section)}
-                        >
-                            Code
-                        </button>
-                    </div>
-                    <div className='text-white flex flex-row gap-1 bg-[#666565] w-8 h-8 items-center justify-center rounded-[4px]'>
-                        <Copy />
-                    </div>
-                </div>
+    const buttonCodeExample1 = `
+<Badge hovered={true}>Hello</Badge>
+    `.trim();
 
-                <div className="p-6 h-[350px] bg-white bg-opacity-10 rounded-xl border border-zinc-700 backdrop-filter backdrop-blur-lg overflow-auto">
-                    {showCodeStates[section] ? (
-                        <SyntaxHighlighter 
-                            language="jsx" 
-                            style={vscDarkPlus}
-                            customStyle={{
-                                background: 'transparent',
-                                padding: '0',
-                                margin: '0',
-                            }}
-                            codeTagProps={{
-                                style: {
-                                    fontSize: '14px',
-                                    lineHeight: '1.5',
-                                }
-                            }}
-                        >
-                            {buttonCode}
-                        </SyntaxHighlighter>
-                    ) : (
-                        <div className="flex flex-col items-center justify-center min-h-full space-y-4">
-                            <Badge hovered={section === 'example1' || section === 'example2'} animated={section === 'example2'}>Hello</Badge>
-                            
-                        </div>
-                    )}
+    const buttonCodeExample2 = `
+<Badge hovered={true} animated={true}>Hello</Badge>
+    `.trim();
+
+    const renderSection = (section: keyof typeof showCodeStates, title: string, description: string) => {
+        let buttonCode;
+        switch (section) {
+            case 'example1':
+                buttonCode = buttonCodeExample1;
+                break;
+            case 'example2':
+                buttonCode = buttonCodeExample2;
+                break;
+            default:
+                buttonCode = buttonCodePreview;
+        }
+
+        return (
+            <section className="space-y-8">
+                <div className="space-y-4">
+                    <h2 className="text-2xl font-semibold text-white">{title}</h2>
+                    <p className="text-lg text-zinc-300">{description}</p>
                 </div>
-            </div>
-        </section>
-    );
+                <div className="space-y-6">
+                    <div className="flex flex-row justify-between border-b border-zinc-700">
+                        <div className='flex flex-row gap-8'>
+                            <button
+                                className={`text-base pb-2 ${!showCodeStates[section] ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
+                                onClick={() => toggleCodeView(section)}
+                            >
+                                Preview
+                            </button>
+                            <button
+                                className={`text-base pb-2 ${showCodeStates[section] ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
+                                onClick={() => toggleCodeView(section)}
+                            >
+                                Code
+                            </button>
+                        </div>
+                        <div className='text-white flex flex-row gap-1 bg-[#666565] w-8 h-8 items-center justify-center rounded-[4px]'>
+                            <Copy />
+                        </div>
+                    </div>
+
+                    <div className="p-6 max-h-[350px] bg-white bg-opacity-10 rounded-xl border border-zinc-700 backdrop-filter backdrop-blur-lg overflow-auto">
+                        {showCodeStates[section] ? (
+                            <SyntaxHighlighter 
+
+                                language="jsx" 
+                                style={vscDarkPlus}
+                                customStyle={{
+                                    background: 'transparent',
+                                    padding: '0',
+                                    margin: '0',
+                                }}
+                                codeTagProps={{
+                                    style: {
+                                        fontSize: '14px',
+                                        lineHeight: '1.5',
+                                    }
+                                }}
+                            >
+                                {buttonCode}
+                            </SyntaxHighlighter>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center min-h-full space-y-4">
+                                <Badge hovered={section === 'example1' || section === 'example2'} animated={section === 'example2'}>Hello</Badge>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </section>
+        );
+    };
 
     return (
         <Layout>
