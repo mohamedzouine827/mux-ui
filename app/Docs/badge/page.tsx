@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -8,10 +9,19 @@ import Copy from '@/app/Assets/Copy';
 import { motion } from 'framer-motion';
 import Badge from './Badge';
 
-
-
 const Page: React.FC = () => {
-    const [showCode, setShowCode] = useState(false);
+    const [showCodeStates, setShowCodeStates] = useState({
+        preview: false,
+        example1: false,
+        example2: false
+    });
+
+    const toggleCodeView = (section: keyof typeof showCodeStates) => {
+        setShowCodeStates(prev => ({
+            ...prev,
+            [section]: !prev[section]
+        }));
+    };
 
     const buttonCode = `
 import React from 'react';
@@ -89,172 +99,74 @@ export default function Badge({
 </Badge>
     `.trim();
 
+    const renderSection = (section: keyof typeof showCodeStates, title: string, description: string) => (
+        <section className="space-y-8">
+            <div className="space-y-4">
+                <h2 className="text-2xl font-semibold text-white">{title}</h2>
+                <p className="text-lg text-zinc-300">{description}</p>
+            </div>
+            <div className="space-y-6">
+                <div className="flex flex-row justify-between border-b border-zinc-700">
+                    <div className='flex flex-row gap-8'>
+                        <button
+                            className={`text-base pb-2 ${!showCodeStates[section] ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
+                            onClick={() => toggleCodeView(section)}
+                        >
+                            Preview
+                        </button>
+                        <button
+                            className={`text-base pb-2 ${showCodeStates[section] ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
+                            onClick={() => toggleCodeView(section)}
+                        >
+                            Code
+                        </button>
+                    </div>
+                    <div className='text-white flex flex-row gap-1 bg-[#666565] w-8 h-8 items-center justify-center rounded-[4px]'>
+                        <Copy />
+                    </div>
+                </div>
+
+                <div className="p-6 h-[350px] bg-white bg-opacity-10 rounded-xl border border-zinc-700 backdrop-filter backdrop-blur-lg overflow-auto">
+                    {showCodeStates[section] ? (
+                        <SyntaxHighlighter 
+                            language="jsx" 
+                            style={vscDarkPlus}
+                            customStyle={{
+                                background: 'transparent',
+                                padding: '0',
+                                margin: '0',
+                            }}
+                            codeTagProps={{
+                                style: {
+                                    fontSize: '14px',
+                                    lineHeight: '1.5',
+                                }
+                            }}
+                        >
+                            {buttonCode}
+                        </SyntaxHighlighter>
+                    ) : (
+                        <div className="flex flex-col items-center justify-center min-h-full space-y-4">
+                            <Badge hovered={section === 'example1' || section === 'example2'} animated={section === 'example2'}>Hello</Badge>
+                            
+                        </div>
+                    )}
+                </div>
+            </div>
+        </section>
+    );
+
     return (
         <Layout>
-            <div className="mx-auto p-12 space-y-8">
+            <div className="mx-auto px-14 py-12 space-y-8 max-w-4xl">
                 <header className="space-y-3">
                     <h1 className="text-[32px] font-semibold text-white">Badge</h1>
                     <p className="text-lg text-zinc-300 font-medium">Displays a badge or a component that looks like a badge.</p>
                 </header>
 
-                <section className="space-y-8">
-                    <div className="space-y-4">
-                        <h2 className="text-2xl font-semibold text-white">Preview</h2>
-                        <p className="text-lg text-zinc-300">Here's a preview of Badge components with a code.</p>
-                    </div>
-
-                    <div className="space-y-6">
-                        <div className="flex flex-row justify-between border-b border-zinc-700">
-                            <div className='flex flex-row gap-8'>
-                                <button
-                                    className={`text-base pb-2 ${showCode ? 'text-zinc-300' : 'text-zinc-300 border-b-2 border-zinc-300'}`}
-                                    onClick={() => setShowCode(false)}
-                                >
-                                    Preview
-                                </button>
-                                <button
-                                    className={`text-base pb-2 ${showCode ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
-                                    onClick={() => setShowCode(true)}
-                                >
-                                    Code
-                                </button>
-                            </div>
-                            <div className='text-white flex flex-row gap-1 bg-[#666565] w-8 h-8 items-center justify-center rounded-[4px]'>
-                                <Copy />
-                            </div>
-                        </div>
-
-                        <div className="p-6 h-[350px] bg-white bg-opacity-10 rounded-xl border border-zinc-700 backdrop-filter backdrop-blur-lg overflow-auto">
-                            {showCode ? (
-                                <SyntaxHighlighter 
-                                    language="jsx" 
-                                    style={vscDarkPlus}
-                                    customStyle={{
-                                        background: 'transparent',
-                                        padding: '0',
-                                        margin: '0',
-                                    }}
-                                    codeTagProps={{
-                                        style: {
-                                            fontSize: '14px',
-                                            lineHeight: '1.5',
-                                        }
-                                    }}
-                                >
-                                    {buttonCode}
-                                </SyntaxHighlighter>
-                            ) : (
-                                <div className="flex justify-center items-center h-full">
-                                    <Badge  >Hello</Badge>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </section>
-
-                <section className="space-y-8">
-                    <div className="space-y-4">
-                        <h2 className="text-2xl font-semibold text-white">Examples</h2>
-                        <p className="text-lg text-zinc-300">Examples of the Badge Components that you might use</p>
-                    </div>
-                    <div className="space-y-6">
-                        <div className="flex flex-row justify-between border-b border-zinc-700">
-                            <div className='flex flex-row gap-8'>
-                                <button
-                                    className={`text-base pb-2 ${showCode ? 'text-zinc-300' : 'text-zinc-300 border-b-2 border-zinc-300'}`}
-                                    onClick={() => setShowCode(false)}
-                                >
-                                    Preview
-                                </button>
-                                <button
-                                    className={`text-base pb-2 ${showCode ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
-                                    onClick={() => setShowCode(true)}
-                                >
-                                    Code
-                                </button>
-                            </div>
-                            <div className='text-white flex flex-row gap-1 bg-[#666565] w-8 h-8 items-center justify-center rounded-[4px]'>
-                                <Copy />
-                            </div>
-                        </div>
-
-                        <div className="p-6 h-[350px] bg-white bg-opacity-10 rounded-xl border border-zinc-700 backdrop-filter backdrop-blur-lg overflow-auto">
-                            {showCode ? (
-                                <SyntaxHighlighter 
-                                    language="jsx" 
-                                    style={vscDarkPlus}
-                                    customStyle={{
-                                        background: 'transparent',
-                                        padding: '0',
-                                        margin: '0',
-                                    }}
-                                    codeTagProps={{
-                                        style: {
-                                            fontSize: '14px',
-                                            lineHeight: '1.5',
-                                        }
-                                    }}
-                                >
-                                    {buttonCode}
-                                </SyntaxHighlighter>
-                            ) : (
-                                <div className="flex justify-center items-center h-full">
-                                    <Badge hovered={true} >Hello</Badge>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </section>
-                <section className="space-y-8">
-
-                    <div className="space-y-6">
-                        <div className="flex flex-row justify-between border-b border-zinc-700">
-                            <div className='flex flex-row gap-8'>
-                                <button
-                                    className={`text-base pb-2 ${showCode ? 'text-zinc-300' : 'text-zinc-300 border-b-2 border-zinc-300'}`}
-                                    onClick={() => setShowCode(false)}
-                                >
-                                    Preview
-                                </button>
-                                <button
-                                    className={`text-base pb-2 ${showCode ? 'text-zinc-300 border-b-2 border-zinc-300' : 'text-zinc-300'}`}
-                                    onClick={() => setShowCode(true)}
-                                >
-                                    Code
-                                </button>
-                            </div>
-                            <div className='text-white flex flex-row gap-1 bg-[#666565] w-8 h-8 items-center justify-center rounded-[4px]'>
-                                <Copy />
-                            </div>
-                        </div>
-
-                        <div className="p-6 h-[350px] bg-white bg-opacity-10 rounded-xl border border-zinc-700 backdrop-filter backdrop-blur-lg overflow-auto">
-                            {showCode ? (
-                                <SyntaxHighlighter 
-                                    language="jsx" 
-                                    style={vscDarkPlus}
-                                    customStyle={{
-                                        background: 'transparent',
-                                        padding: '0',
-                                        margin: '0',
-                                    }}
-                                    codeTagProps={{
-                                        style: {
-                                            fontSize: '14px',
-                                            lineHeight: '1.5',
-                                        }
-                                    }}
-                                >
-                                    {buttonCode}
-                                </SyntaxHighlighter>
-                            ) : (
-                                <div className="flex justify-center items-center h-full">
-                                    <Badge hovered={true} animated={true} >Hello</Badge>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </section>
+                {renderSection('preview', 'Preview', "Here's a preview of Badge components with a code.")}
+                {renderSection('example1', 'Examples', "Examples of the Badge Components that you might use")}
+                {renderSection('example2', 'Animated Example', "An example of an animated Badge component")}
             </div>
         </Layout>
     );
