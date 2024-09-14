@@ -37,11 +37,8 @@ const Sidebar: React.FC = () => {
         <div className="flex-col justify-start items-start gap-7 flex">
           <div className="text-slate-300 text-base font-semibold">Components</div>
           <div className="flex-col justify-center items-start gap-4 flex">
-            <MenuItem href="/Docs/alert">Alert</MenuItem>
-            <MenuItem href="/Docs/alert-dialog">Alert Dialog</MenuItem>
             <MenuItem href="/Docs/button">Button</MenuItem>
             <MenuItem href="/Docs/badge">Badge</MenuItem>
-            <MenuItem href="/Docs/navbar">Navbar</MenuItem>
           </div>
         </div>
       </div>
