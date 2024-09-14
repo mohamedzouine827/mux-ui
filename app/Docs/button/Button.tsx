@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 interface ButtonProps {
   lightEffect?: boolean;
   shadowEffect?: boolean;
-  rolling?: boolean; // Fixed typo from 'rollign' to 'rolling'
+  rollign?: boolean;
   version?: 'default' | 'underline' | 'border' | 'red'; // New version prop
 }
 
@@ -12,10 +12,8 @@ const Button: React.FC<ButtonProps> = ({
   lightEffect = false,
   shadowEffect = false,
   version = 'default',
-  rolling = true, // Fixed typo
+  rollign = true,
 }) => {
-  const [textCharacters, setTextCharacters] = useState<string[]>([]);
-
   // Function to return styles based on version prop
   const getVersionStyles = () => {
     switch (version) {
@@ -30,14 +28,6 @@ const Button: React.FC<ButtonProps> = ({
     }
   };
 
-  // Splitting text into individual characters for animation
-  useEffect(() => {
-    if (rolling) {
-      const text = 'hello'; // The text you want to animate
-      setTextCharacters(text.split(''));
-    }
-  }, [rolling]);
-
   return (
     <div className="group relative inline-block">
       {/* Button */}
@@ -47,35 +37,18 @@ const Button: React.FC<ButtonProps> = ({
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
         {/* Text inside the button */}
-        {rolling ? (
-          <div className="flex overflow-hidden">
-            {textCharacters.map((char, index) => (
-              <motion.span
-                key={index}
-                className="inline-block relative"
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1, // Wave effect by staggering each character
-                  ease: 'easeInOut',
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </div>
-        ) : (
-          <h1
-            className={`text-[14px] leading-5 font-semibold ${
-              version === 'underline' ? 'text-black' : ''
-            } relative`}
-          >
-            continue
-          </h1>
-        )}
+        {
+            rollign ? (
+                <div className=''>
+                    hello
+                </div>
+            ) : 
+            (
+                <h1 className={`text-[14px] leading-5 font-semibold ${version === 'underline' ? 'text-black' : ''} relative`}>
+          continue
+        </h1>
+            )
+        }
 
         {/* Light Effect */}
         <motion.div
