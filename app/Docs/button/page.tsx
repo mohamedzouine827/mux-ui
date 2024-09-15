@@ -41,83 +41,49 @@ const Page: React.FC = () => {
 import React from 'react';
 import { motion } from 'framer-motion';
 
-interface BadgeProps {
+interface ButtonProps {
   children: React.ReactNode;
-  textColor?: string;
-  bgColor?: string;
-  hovered?: boolean;
-  animated?: boolean;
-  lightDuration?: number;
-  lightOpacity?: string;
-  lightColor?: string;
+  lightEffect?: boolean;
+  shadowEffect?: boolean;
+  rolling?: boolean;
+  version?: 'default' | 'underline' | 'border' | 'red' | 'funky';
+  textSize?: string;
+  onClick?: () => void;
 }
 
-const tailwindColors: { [key: string]: string } = {
-  'zinc-400': '#a1a1aa',
-  'zinc-600': '#52525b',
-  // Add more color mappings as needed
-};
-
-export default function Badge({
+const Button: React.FC<ButtonProps> = ({
   children,
-  textColor = 'white',
-  bgColor = 'zinc-600',
-  hovered = false,
-  animated = false,
-  lightDuration = 1,
-  lightOpacity = '30',
-  lightColor = "white"
-}: BadgeProps) {
-  const getColor = (color: string) => {
-    if (color.startsWith('#')) {
-      return color;
-    }
-    return tailwindColors[color] || color;
+  lightEffect = false,
+  shadowEffect = false,
+  rolling = false,
+  version = 'default',
+  textSize = 'text-base',
+  onClick,
+}) => {
+  const versionStyles = {
+    default: 'bg-blue-500 text-white',
+    underline: 'bg-transparent text-blue-500 underline',
+    border: 'bg-transparent border border-blue-500 text-blue-500',
+    red: 'bg-red-500 text-white',
+    funky: 'bg-gradient-to-r from-pink-500 to-purple-500 text-white',
   };
 
-  const bgColorValue = getColor(bgColor);
-  const textColorValue = getColor(textColor);
-  const lightColorValue = getColor(lightColor);
-
   return (
-    <div className={\`inline-block \${hovered ? 'hover:-translate-y-1' : ''} transition-transform duration-300\`}>
-      <button
-        className={\`
-          relative
-          px-[10px] py-[2px] 
-          rounded-full 
-          text-[12px] leading-[16px] font-semibold
-          transition-all duration-300 ease-in-out
-          overflow-hidden
-        \`}
-        style={{
-          backgroundColor: bgColorValue,
-          color: textColorValue,
-        }}
-      >
-        {children}
-        {animated && (
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: \`linear-gradient(to right, transparent, \${lightColorValue}, transparent)\`,
-              opacity: parseInt(lightOpacity) / 100,
-            }}
-            initial={{ x: '-100%' }}
-            animate={{ x: '100%' }}
-            transition={{
-              repeat: Infinity,
-              repeatType: 'loop',
-              duration: lightDuration,
-              ease: 'linear',
-              repeatDelay: 4
-            }}
-          />
-        )}
-      </button>
-    </div>
+    <motion.button
+      className={\`px-4 py-2 rounded-md transition-all duration-300 ease-in-out \${versionStyles[version]} \${textSize} \${shadowEffect ? 'shadow-lg' : ''}\`}
+      whileHover={{
+        scale: 1.05,
+        rotate: rolling ? 360 : 0,
+        boxShadow: lightEffect ? '0px 0px 8px 2px rgba(255, 255, 255, 0.5)' : 'none',
+      }}
+      onClick={onClick}
+    >
+      {children}
+    </motion.button>
   );
-}
+};
+
+export default Button;
 `.trim();
 
     const buttonCodeExample1 = `
