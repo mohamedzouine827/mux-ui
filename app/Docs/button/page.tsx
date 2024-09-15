@@ -13,7 +13,10 @@ const Page: React.FC = () => {
     const [showCodeStates, setShowCodeStates] = useState({
         preview: false,
         example1: false,
-        example2: false
+        example2: false,
+        funky: false,
+        border: false,
+        underline: false
     });
     const [copied, setCopied] = useState(false);
 
@@ -195,7 +198,15 @@ export default function Badge({
                             </SyntaxHighlighter>
                         ) : (
                             <div className="flex flex-col items-center justify-center min-h-full space-y-4">
-                                <Button version="border" shadowEffect={true} />
+                                <Button
+                                    shadowEffect={section === "example2"}
+                                    rolling={section === "example1"}
+                                    version={section === "funky" ? "funky" : section === "border" ? "border"  :section === "underline" ? "underline"  : undefined}
+                                    
+                                >
+                                    Components
+                                </Button>
+
                             </div>
                         )}
                     </div>
@@ -216,62 +227,72 @@ export default function Badge({
                 {renderSection('preview', 'Preview', "Here's a preview of Badge components with a code.")}
                 {renderSection('example1', 'Examples', "Examples of the Badge Components that you might use")}
                 {renderSection('example2', 'Animated Example', "An example of an animated Badge component")}
+                {renderSection('funky', 'Funky Button Example', "An example of a Button with the funky version")}
+                {renderSection('border', 'Border Button Example', "An example of a Button with the border version")}
+                {renderSection('underline', 'Underline Button Example', "An example of a Button with the underline version")}
                 <div className="space-y-4">
                     <h2 className="text-2xl font-semibold text-white">Props</h2>
-                    <p className="text-lg text-zinc-300"></p>
-                    <div>
-                        <table className="w-full table-auto border-collapse border border-gray-300">
-                            <thead className="">
-                                <tr>
-                                    <th className="px-4 py-2 text-left text-base text-white font-semibold border border-gray-300">Prop</th>
-                                    <th className="px-4 py-2 text-left text-zinc-300 font-semibold border border-gray-300">Type</th>
-                                    <th className="px-4 py-2 text-left text-zinc-300 font-semibold border border-gray-300">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>Children</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The text that will shows up</td>
-                                </tr>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>TextColor</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Color of the text</td>
-                                </tr>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>bgColor</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Color of the background</td>
-                                </tr>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>hovered</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Boolean</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The badge goes up if you hover on it</td>
-                                </tr>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>animated</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Boolean</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">If you want the light to be animated or not</td>
-                                </tr>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>lightDuration</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Number</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The duration of the light</td>
-                                </tr>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>lightOpacity</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Number</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The percentage of the light</td>
-                                </tr>
-                                <tr className="">
-                                    <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>lightColor</Badge></td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
-                                    <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The color of the light</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table className="w-full table-auto border-collapse border border-gray-300">
+                        <thead className="">
+                            <tr>
+                                <th className="px-4 py-2 text-left text-base text-white font-semibold border border-gray-300">Prop</th>
+                                <th className="px-4 py-2 text-left text-zinc-300 font-semibold border border-gray-300">Type</th>
+                                <th className="px-4 py-2 text-left text-zinc-300 font-semibold border border-gray-300">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>children</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The content of the Button</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>lightEffect</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Boolean</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Whether to apply a light effect to the button</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>shadowEffect</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Boolean</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Whether to apply a shadow effect to the button</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>version</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The version of the button style ('default' or other variants)</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>rolling</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Boolean</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Whether the button should have a rolling animation</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>textSize</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The size of the text in the button</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>textColor</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The color of the text in the button</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>borderColor</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The color of the button's border</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>backgroundColor</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The background color of the button</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>duration</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Number</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The duration of animations in seconds</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </Layout>
