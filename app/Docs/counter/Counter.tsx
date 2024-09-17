@@ -4,82 +4,82 @@ import { motion, animate, AnimationPlaybackControls, useMotionValue, useTransfor
 
 interface CounterProps {
   targetNumber: number;
-  variant?: 'normal' | 'reverse' | 'random' | 'casino'; // Add casino variant
-  speed?: 'slow' | 'normal' | 'fast'; // Add speed variants
+  variant?: 'normal' | 'reverse' | 'random' | 'casino'; 
+  speed?: 'slow' | 'normal' | 'fast'; 
+  textSize?: 'text-xs' | 'text-sm' | 'text-base' | 'text-lg' | 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl'; // Tailwind text sizes
+  fontSize?: number; // Font size in pixels
+  textColor?: string; // Text color (hex, rgb, or named colors)
+  fontWeight?: 'font-thin' | 'font-extralight' | 'font-light' | 'font-normal' | 'font-medium' | 'font-semibold' | 'font-bold' | 'font-extrabold' | 'font-black'; // Tailwind font weights
 }
 
-const Counter: React.FC<CounterProps> = ({ targetNumber, variant = 'normal', speed = 'normal' }) => {
-  const [digits, setDigits] = useState<number[]>([]); // Store each digit separately
-  const count = useMotionValue(variant === 'reverse' ? targetNumber : 0); // Start at targetNumber if reverse
-
-  // Create a formatted number animation from 0 to targetNumber
+const Counter: React.FC<CounterProps> = ({
+  targetNumber,
+  variant = 'normal',
+  speed = 'normal',
+  textSize = 'text-6xl', // Default size
+  fontSize,
+  textColor = 'text-blue-600', // Default color
+  fontWeight = 'font-bold' // Default font weight
+}) => {
+  const [digits, setDigits] = useState<number[]>([]); 
+  const count = useMotionValue(variant === 'reverse' ? targetNumber : 0); 
   const rounded = useTransform(count, (value) => Math.floor(value));
 
-  // Helper function to generate a random number for a single digit
   const generateRandomDigit = () => Math.floor(Math.random() * 10);
 
-  // Set animation duration based on speed
   const getDuration = () => {
     switch (speed) {
       case 'slow':
-        return 7; // Slower animation
+        return 7; 
       case 'fast':
-        return 1; // Faster animation
+        return 1; 
       case 'normal':
       default:
-        return 3; // Default duration for normal speed
+        return 3; 
     }
   };
 
-  // Animation logic for casino variant
   const startCasinoEffect = (): (() => void) => {
-    const targetDigits = targetNumber.toString().split('').map(Number); // Split the target number into digits
+    const targetDigits = targetNumber.toString().split('').map(Number); 
     const totalDigits = targetDigits.length;
 
     const digitIntervals: NodeJS.Timeout[] = [];
 
-    // For each digit, create a random animation that stops sequentially
     targetDigits.forEach((digit, index) => {
-      let currentDigit = generateRandomDigit(); // Start with a random digit
+      let currentDigit = generateRandomDigit(); 
       const interval = setInterval(() => {
-        currentDigit = generateRandomDigit(); // Keep showing random digits
+        currentDigit = generateRandomDigit(); 
         setDigits((prevDigits) => {
           const newDigits = [...prevDigits];
           newDigits[index] = currentDigit;
           return newDigits;
         });
-      }, 100); // Update random digit every 100ms
+      }, 100);
 
-      // Stop the animation for the current digit after some delay, in sequence
       setTimeout(() => {
-        clearInterval(interval); // Stop updating the current digit
+        clearInterval(interval);
         setDigits((prevDigits) => {
           const newDigits = [...prevDigits];
-          newDigits[index] = digit; // Set the final digit
+          newDigits[index] = digit; 
           return newDigits;
         });
-      }, (index + 1) * 1000); // Sequential stopping with 1s delay between each digit
+      }, (index + 1) * 1000); 
       digitIntervals.push(interval);
     });
 
-    // Cleanup all intervals when the component unmounts
     return () => {
       digitIntervals.forEach(clearInterval);
     };
   };
 
-  // Handle different variants
   useEffect(() => {
     let controls: AnimationPlaybackControls | undefined;
 
     if (variant === 'casino') {
-      // Initialize digits with the same length as targetNumber, but filled with 0
       setDigits(new Array(targetNumber.toString().length).fill(0));
-      // Start the casino effect
       const cleanup = startCasinoEffect();
-      return cleanup; // Cleanup on unmount
+      return cleanup; 
     } else {
-      // Handle other cases (normal, reverse, random)
       controls = animate(count, variant === 'reverse' ? 0 : targetNumber, {
         duration: getDuration(),
         onUpdate: (value) => {
@@ -88,14 +88,20 @@ const Counter: React.FC<CounterProps> = ({ targetNumber, variant = 'normal', spe
       });
 
       return () => {
-        controls?.stop(); // Cleanup on unmount
+        controls?.stop();
       };
     }
   }, [targetNumber, variant, speed, count]);
 
+  // Apply dynamic styles
+  const textStyle = {
+    fontSize: fontSize ? `${fontSize}px` : undefined,
+    color: textColor ? textColor : undefined,
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="text-6xl font-bold text-blue-600 mb-8 flex space-x-2">
+      <div className={`mb-8 flex space-x-2 ${textSize} ${fontWeight}`} style={textStyle}>
         {digits.map((digit, index) => (
           <motion.div key={index} className="digit">
             {digit}
