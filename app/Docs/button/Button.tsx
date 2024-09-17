@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   textSize = '14px',
   textColor = 'white',
   borderColor = '#ffffff',
-  backgroundColor = '#09090B',
+  backgroundColor = '#0909AB',
   duration = 0.25,
 }) => {
   const STAGGER = 0.025;
@@ -31,22 +31,29 @@ const Button: React.FC<ButtonProps> = ({
   const getVersionStyles = () => {
     switch (version) {
       case 'underline':
-        return `bg-transparent text-${textColor} underline border-none`;
+        return `underline border-none`;
       case 'border':
-        return `bg-transparent text-${textColor} border border-[${borderColor}]`;
+        return `border border-[${borderColor}]`;
       case 'red':
-        return `bg-red-600 text-${textColor} border border-red-600`;
+        return `bg-red-600 border border-red-600`;
       case 'funky':
-        return `bg-[${backgroundColor}] text-${textColor} rounded-full`;
+        return `rounded-full`;
       default:
-        return `bg-[${backgroundColor}] text-${textColor}`;
+        return '';
     }
+  };
+
+  const buttonStyle = {
+    backgroundColor: version === 'default' || version === 'funky' ? backgroundColor : 'transparent',
+    color: textColor,
+    fontSize: textSize,
   };
 
   return (
     <div className="group relative inline-block">
       <motion.div
-        className={` group cursor-pointer relative hover:bg-[#1e1e20]  transition-colors duration-150 ease-in-out py-2 px-4 ${version === 'funky' ? 'rounded-full' : 'rounded-[7px]'} h-[36px] flex justify-center items-center overflow-hidden z-10 ${getVersionStyles()}`}
+        className={`group cursor-pointer relative hover:bg-[#1e1e20] transition-colors duration-150 ease-in-out py-2 px-4 ${version === 'funky' ? 'rounded-full' : 'rounded-[7px]'} h-[36px] flex justify-center items-center overflow-hidden z-10 ${getVersionStyles()}`}
+        style={buttonStyle}
         whileHover={shadowEffect ? { x: -5, y: -5 } : undefined}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
@@ -54,7 +61,7 @@ const Button: React.FC<ButtonProps> = ({
           <motion.div
             initial="initial"
             whileHover="hovered"
-            className={`relative block overflow-hidden whitespace-nowrap text-[${textSize}] font-semibold`}
+            className="relative block overflow-hidden whitespace-nowrap font-semibold"
           >
             <div>
               {(children as string).split("").map((l, i) => (
@@ -96,7 +103,7 @@ const Button: React.FC<ButtonProps> = ({
             </div>
           </motion.div>
         ) : (
-          <h1 className={`text-[${textSize}] group-hover:text-[#E4E4E7] leading-5 font-semibold relative`}>
+          <h1 className="group-hover:text-[#E4E4E7] leading-5 font-semibold relative">
             {children}
           </h1>
         )}
@@ -117,9 +124,10 @@ const Button: React.FC<ButtonProps> = ({
 
       {shadowEffect && (
         <motion.div
-          className={`absolute top-0 left-0 w-full h-full bg-[${backgroundColor}] ${version === 'funky' ? 'rounded-full' : 'rounded-[7px]'} z-0`}
+          className="absolute inset-0 rounded-[7px]"
+          style={{ backgroundColor }}
           initial={{ opacity: 0, x: 0, y: 0 }}
-          whileHover={{ opacity: 1 }}
+          whileHover={{ opacity: 1, x: 5, y: 5 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
         />
       )}
