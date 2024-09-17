@@ -1,11 +1,10 @@
 "use client";
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Layout from '../Layout';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import Copy from '@/app/Assets/Copy';
-import { motion } from 'framer-motion';
+
 import Badge from '../badge/Badge';
 import Button from './Button';
 
