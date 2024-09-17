@@ -79,7 +79,7 @@ const Page: React.FC = () => {
           <div className="self-stretch flex-col justify-start items-start gap-8 flex">
             <div className="self-stretch h-[72px] flex-col justify-start items-start gap-6 flex">
               <div className="text-white text-2xl font-semibold leading-normal">Installation</div>
-              <div className="text-zinc-300 text-lg font-medium leading-normal">To get started, you'll need to have Node.js and npm (or yarn) installed on your system.</div>
+              <div className="text-zinc-300 text-lg font-medium leading-normal">To get started, you&apos;ll need to have Node.js and npm (or yarn) installed on your system.</div>
             </div>
             <div className="flex-col justify-start items-start gap-12 flex">
               {stepsData.map((step, index) => (

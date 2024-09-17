@@ -224,7 +224,7 @@ export default Button;
                             <tr className="">
                                 <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>version</Badge></td>
                                 <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
-                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The version of the button style ('default' or other variants)</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The version of the button style (&apos;default&apos; or other variants)</td>
                             </tr>
                             <tr className="">
                                 <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>rolling</Badge></td>
@@ -244,7 +244,7 @@ export default Button;
                             <tr className="">
                                 <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>borderColor</Badge></td>
                                 <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
-                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The color of the button's border</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The color of the button&apos;s border</td>
                             </tr>
                             <tr className="">
                                 <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>backgroundColor</Badge></td>
