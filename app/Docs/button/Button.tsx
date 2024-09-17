@@ -11,6 +11,7 @@ interface ButtonProps {
   textColor?: string;
   borderColor?: string;
   backgroundColor?: string;
+  hoverBackgroundColor?: string;
   duration?: number;
 }
 
@@ -24,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   textColor = 'white',
   borderColor = '#ffffff',
   backgroundColor = '#09090B',
+  hoverBackgroundColor = '#2D2D30',
   duration = 0.25,
 }) => {
   const STAGGER = 0.025;
@@ -44,18 +46,29 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   const buttonStyle = {
-    backgroundColor: version === 'default' || version === 'funky' ? backgroundColor : 'transparent',
     color: textColor,
     fontSize: textSize,
   };
 
+  const buttonVariants = {
+    initial: (version === 'default' || version==='funky') ? { backgroundColor } : {},
+    hover: version === 'default' ? { 
+      backgroundColor: hoverBackgroundColor,
+      ...(shadowEffect ? { x: -5, y: -5 } : {})
+    } : {},
+  };
+
+
   return (
     <div className="group relative inline-block">
       <motion.div
-        className={`group cursor-pointer relative hover:bg-[#1e1e20] transition-colors duration-150 ease-in-out py-2 px-4 ${version === 'funky' ? 'rounded-full' : 'rounded-[7px]'} h-[36px] flex justify-center items-center overflow-hidden z-10 ${getVersionStyles()}`}
+        className={`cursor-pointer relative py-2 px-4 ${version === 'funky' ? 'rounded-full' : 'rounded-[7px]'} h-[36px] flex justify-center items-center overflow-hidden z-10 ${getVersionStyles()}`}
         style={buttonStyle}
-        whileHover={shadowEffect ? { x: -5, y: -5 } : undefined}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        variants={buttonVariants}
+        initial="initial"
+        whileHover="hover"
+        animate="initial"
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }} // Using easeInOutQuad for smoother transition
       >
         {rolling ? (
           <motion.div
@@ -128,7 +141,7 @@ const Button: React.FC<ButtonProps> = ({
           style={{ backgroundColor }}
           initial={{ opacity: 0, x: 0, y: 0 }}
           whileHover={{ opacity: 1, x: 5, y: 5 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
         />
       )}
     </div>

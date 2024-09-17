@@ -86,12 +86,25 @@ export default Button;
 `.trim();
 
     const buttonCodeExample1 = `
-<Badge hovered={true}>Hello</Badge>
+    <Button  rolling={true} >Components</Button>
     `.trim();
 
     const buttonCodeExample2 = `
-<Badge hovered={true} animated={true}>Hello</Badge>
+    <Button shadowEffect={true} >Components</Button>
     `.trim();
+
+    const buttonCodeFunky = `
+    <Button version="funky">Components</Button>
+    `.trim();
+    const buttonCodeBorder = `
+    <Button version="border">Components</Button>
+    `.trim();
+    const buttonCodeUnder= `
+    <Button version="underline">Components</Button>
+    `.trim();
+
+
+
 
     const renderSection = (section: keyof typeof showCodeStates, title: string, description: string) => {
         let buttonCode;
@@ -102,6 +115,15 @@ export default Button;
             case 'example2':
                 buttonCode = buttonCodeExample2;
                 break;
+            case 'funky':
+                buttonCode = buttonCodeFunky;
+                break;
+            case 'border':
+                buttonCode = buttonCodeBorder;
+                break;
+            case 'underline':
+                    buttonCode = buttonCodeUnder;
+                    break;
             default:
                 buttonCode = buttonCodePreview;
         }
@@ -164,10 +186,11 @@ export default Button;
                         ) : (
                             <div className="flex flex-col items-center justify-center min-h-full space-y-4">
                                 <Button
+
                                     shadowEffect={section === "example2"}
                                     rolling={section === "example1"}
-                                    version={section === "funky" ? "funky" : section === "border" ? "border"  :section === "underline" ? "underline"  : undefined}
-                                    
+                                    version={section === "funky" ? "funky" : section === "border" ? "border" : section === "underline" ? "underline" : undefined}
+
                                 >
                                     Components
                                 </Button>
@@ -255,6 +278,11 @@ export default Button;
                                 <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>duration</Badge></td>
                                 <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Number</td>
                                 <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">The duration of animations in seconds</td>
+                            </tr>
+                            <tr className="">
+                                <td className="px-4 py-2 text-sm font-medium text-zinc-300 border border-gray-300"><Badge>hoverBackgroundColor</Badge></td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">String</td>
+                                <td className="px-4 py-2 text-sm text-zinc-300 border border-gray-300">Color for the background when hover is activated</td>
                             </tr>
                         </tbody>
                     </table>
