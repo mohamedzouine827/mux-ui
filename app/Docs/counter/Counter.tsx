@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { motion, animate, AnimationPlaybackControls, useMotionValue, useTransform } from 'framer-motion';
+import { motion, animate, AnimationPlaybackControls, useMotionValue} from 'framer-motion';
 
 interface CounterProps {
   targetNumber: number;
-  variant?: 'normal' | 'reverse' | 'random' | 'casino'; 
-  speed?: 'slow' | 'normal' | 'fast'; 
+  variant?: 'normal' | 'reverse' | 'random' | 'casino';
+  speed?: 'slow' | 'normal' | 'fast';
   textSize?: 'text-xs' | 'text-sm' | 'text-base' | 'text-lg' | 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl'; // Tailwind text sizes
-  fontSize?: number; // Font size in pixels
   textColor?: string; // Text color (hex, rgb, or named colors)
   fontWeight?: 'font-thin' | 'font-extralight' | 'font-light' | 'font-normal' | 'font-medium' | 'font-semibold' | 'font-bold' | 'font-extrabold' | 'font-black'; // Tailwind font weights
 }
@@ -17,32 +16,25 @@ const Counter: React.FC<CounterProps> = ({
   variant = 'normal',
   speed = 'normal',
   textSize = 'text-6xl', // Default size
-  fontSize,
   textColor = 'text-blue-600', // Default color
   fontWeight = 'font-bold' // Default font weight
 }) => {
-  const [digits, setDigits] = useState<number[]>([]); 
-  const count = useMotionValue(variant === 'reverse' ? targetNumber : 0); 
-  const rounded = useTransform(count, (value) => Math.floor(value));
+  const [digits, setDigits] = useState<number[]>(Array.from(String(targetNumber), Number)); 
+  const count = useMotionValue(variant === 'reverse' ? targetNumber : 0);
 
   const generateRandomDigit = () => Math.floor(Math.random() * 10);
 
   const getDuration = () => {
-    switch (speed) {
-      case 'slow':
-        return 7; 
-      case 'fast':
-        return 1; 
-      case 'normal':
-      default:
-        return 3; 
-    }
+    const speedMap: Record<string, number> = {
+      slow: 7,
+      normal: 3,
+      fast: 1,
+    };
+    return speedMap[speed] || speedMap.normal;
   };
 
   const startCasinoEffect = (): (() => void) => {
-    const targetDigits = targetNumber.toString().split('').map(Number); 
-    const totalDigits = targetDigits.length;
-
+    const targetDigits = Array.from(String(targetNumber), Number); 
     const digitIntervals: NodeJS.Timeout[] = [];
 
     targetDigits.forEach((digit, index) => {
@@ -54,7 +46,7 @@ const Counter: React.FC<CounterProps> = ({
           newDigits[index] = currentDigit;
           return newDigits;
         });
-      }, 100);
+      }, 50); 
 
       setTimeout(() => {
         clearInterval(interval);
@@ -72,18 +64,38 @@ const Counter: React.FC<CounterProps> = ({
     };
   };
 
+  const startRandomEffect = () => {
+    const totalDigits = String(targetNumber).length;
+    const randomDigits = Array.from({ length: totalDigits }, generateRandomDigit);
+    setDigits(randomDigits);
+  };
+
   useEffect(() => {
     let controls: AnimationPlaybackControls | undefined;
 
     if (variant === 'casino') {
-      setDigits(new Array(targetNumber.toString().length).fill(0));
+      setDigits(Array.from(String(targetNumber), Number));
       const cleanup = startCasinoEffect();
-      return cleanup; 
+      return cleanup;
+    } else if (variant === 'random') {
+      const interval = setInterval(() => {
+        startRandomEffect();
+      }, 50); // Updated to 50ms for faster updates
+
+      const timeout = setTimeout(() => {
+        clearInterval(interval);
+        setDigits(Array.from(String(targetNumber), Number)); // Show target number after 4 seconds
+      }, 4000); // Stop after 4 seconds
+
+      return () => {
+        clearInterval(interval);
+        clearTimeout(timeout);
+      };
     } else {
       controls = animate(count, variant === 'reverse' ? 0 : targetNumber, {
         duration: getDuration(),
         onUpdate: (value) => {
-          setDigits(value.toString().split('').map(Number));
+          setDigits(Array.from(String(Math.floor(value)), Number));
         },
       });
 
@@ -93,9 +105,7 @@ const Counter: React.FC<CounterProps> = ({
     }
   }, [targetNumber, variant, speed, count]);
 
-  // Apply dynamic styles
   const textStyle = {
-    fontSize: fontSize ? `${fontSize}px` : undefined,
     color: textColor ? textColor : undefined,
   };
 

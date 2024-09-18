@@ -212,9 +212,9 @@ export default Button;
                     <p className="text-lg text-zinc-300 font-medium">Displays a button or a component that looks like a button.</p>
                 </header>
 
-                {renderSection('preview', 'Preview', "Here's a preview of Badge components with a code.")}
-                {renderSection('example1', 'Examples', "Examples of the Badge Components that you might use")}
-                {renderSection('example2', 'Animated Example', "An example of an animated Badge component")}
+                {renderSection('preview', 'Preview', "Here's a preview of Butto, components with a code.")}
+                {renderSection('example1', 'Examples', "Examples of the Button Components that you might use")}
+                {renderSection('example2', 'Animated Example', "An example of an animated Button component")}
                 {renderSection('funky', 'Funky Button Example', "An example of a Button with the funky version")}
                 {renderSection('border', 'Border Button Example', "An example of a Button with the border version")}
                 {renderSection('underline', 'Underline Button Example', "An example of a Button with the underline version")}
