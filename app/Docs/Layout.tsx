@@ -13,7 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <NavbarMid />
       </header>
       <main className="flex flex-row container">
-        <aside className="sticky top-0 h-screen overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-500 invisible lg:visible">
+        <aside className="hidden md:block sticky  top-0 h-screen overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-500 invisible lg:visible">
           <Sidebar />
         </aside>
         <div className="flex-1 ">
