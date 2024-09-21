@@ -12,19 +12,22 @@ export default function Navbar(): JSX.Element {
                     <Logo />
                     <nav className="hidden lg:flex items-center gap-8">
                         <Link href="/Docs" >
-                        <NavItem>Document</NavItem>
+                            <NavItem>Document</NavItem>
                         </Link>
                         <Link href="/Docs/button" >
-                        <NavItem>Components</NavItem>
+                            <NavItem>Components</NavItem>
                         </Link>
                         <Link href="https://discord.gg/ZxGaAV7e" >
-                        <NavItem>Community</NavItem>
+                            <NavItem>Community</NavItem>
                         </Link>
                     </nav>
                 </div>
                 <div className="flex items-center gap-4 sm:gap-6">
-                    <FaGithub className='w-5 h-5 sm:w-6 sm:h-6 text-zinc-300' />
-                    <FaXTwitter className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-300" />
+                    <Link href="https://github.com/mohamedzouine827/mux-ui">
+                        <FaGithub className='w-5 h-5 sm:w-6 sm:h-6 text-zinc-300' /></Link>
+                    <Link href="https://x.com/mux0001">
+                        <FaXTwitter className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-300" />
+                    </Link>
                 </div>
             </div>
         </section>

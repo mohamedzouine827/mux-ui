@@ -29,10 +29,10 @@ export default function NavbarMid(): JSX.Element {
                         {/* Navigation links for larger screens */}
                         <div className="justify-start items-center gap-6 lg:flex hidden">
                             <Link href="/Docs">
-                            <div className="text-zinc-300 text-sm font-medium cursor-pointer hover:text-white transition-colors ">Document</div>
+                                <div className="text-zinc-300 text-sm font-medium cursor-pointer hover:text-white transition-colors ">Document</div>
                             </Link>
                             <Link href="/Docs/button">
-                            <div className="text-zinc-300 text-sm font-medium cursor-pointer hover:text-white transition-colors ">Components</div>
+                                <div className="text-zinc-300 text-sm font-medium cursor-pointer hover:text-white transition-colors ">Components</div>
                             </Link>
                         </div>
 
@@ -42,11 +42,11 @@ export default function NavbarMid(): JSX.Element {
                     {isMenuOpen && (
                         <div className="absolute top-20 left-0 w-full bg-zinc-950 text-white p-4 md:hidden">
                             <ul className="flex flex-col gap-4">
-                            <Link href="/Docs">
-                                <li className="cursor-pointer hover:text-gray-300" onClick={() => setIsMenuOpen(false)}>Document</li>
+                                <Link href="/Docs">
+                                    <li className="cursor-pointer hover:text-gray-300" onClick={() => setIsMenuOpen(false)}>Document</li>
                                 </Link>
                                 <Link href="/Docs/button">
-                                <li className="cursor-pointer hover:text-gray-300" onClick={() => setIsMenuOpen(false)}>Components</li>
+                                    <li className="cursor-pointer hover:text-gray-300" onClick={() => setIsMenuOpen(false)}>Components</li>
                                 </Link>
                             </ul>
                         </div>
@@ -62,8 +62,11 @@ export default function NavbarMid(): JSX.Element {
                                 </div>
                             </div>
                             <div className="flex items-center gap-6">
-                                <FaGithub className='w-6 h-6 text-zinc-300' />
-                                <FaXTwitter className="w-6 h-6 text-zinc-300" />
+                                <Link href="https://github.com/mohamedzouine827/mux-ui">
+                                    <FaGithub className='w-5 h-5 sm:w-6 sm:h-6 text-zinc-300' /></Link>
+                                <Link href="https://x.com/mux0001">
+                                    <FaXTwitter className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-300" />
+                                </Link>
                             </div>
                         </div>
                     </div>
