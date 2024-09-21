@@ -6,7 +6,7 @@ export default function HeroSection() {
     <div className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-[120px] py-16 md:py-24 lg:py-32 flex flex-col justify-center items-center gap-8 md:gap-12">
       <div className="flex flex-col justify-start items-center gap-4 md:gap-6">
         <h1 className="text-center text-zinc-100 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight md:leading-[1.2]">The Last UI Library You&apos;ll Ever Need</h1>
-        <p className="max-w-[902px] text-center text-[#8e8e8e] text-base sm:text-lg md:text-xl font-medium leading-relaxed">Create stunning, responsive designs effortlessly with our comprehensive, all-in-one UI library built to handle every project, every time.</p>
+        <p className="max-w-[902px] text-center text-zinc-300 text-base sm:text-lg md:text-xl font-medium leading-relaxed">Create stunning, responsive designs effortlessly with our comprehensive, all-in-one UI library built to handle every project, every time.</p>
       </div>
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
         <Link href="/Docs/button">
