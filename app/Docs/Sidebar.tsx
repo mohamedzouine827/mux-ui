@@ -31,7 +31,7 @@ const Sidebar: React.FC = () => {
           <div className="text-slate-300 text-base font-semibold">Getting Started</div>
           <div className="flex-col justify-center items-start gap-4 flex">
             <MenuItem href="/Docs">Installation</MenuItem>
-            <MenuItem href="/Docs/alert">Components</MenuItem>
+            <MenuItem href="/Docs/button">Components</MenuItem>
           </div>
         </div>
         <div className="flex-col justify-start items-start gap-7 flex">
