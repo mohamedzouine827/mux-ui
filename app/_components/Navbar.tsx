@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from '../Assets/Logo';
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
+import Link from 'next/link';
 
 export default function Navbar(): JSX.Element {
     return (
@@ -10,9 +11,15 @@ export default function Navbar(): JSX.Element {
                 <div className="flex items-center gap-4 sm:gap-10">
                     <Logo />
                     <nav className="hidden lg:flex items-center gap-8">
+                        <Link href="/Docs" >
                         <NavItem>Document</NavItem>
+                        </Link>
+                        <Link href="/Docs/button" >
                         <NavItem>Components</NavItem>
+                        </Link>
+                        <Link href="https://discord.gg/ZxGaAV7e" >
                         <NavItem>Community</NavItem>
+                        </Link>
                     </nav>
                 </div>
                 <div className="flex items-center gap-4 sm:gap-6">

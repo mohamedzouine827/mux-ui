@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Logo from '../Assets/Logo';
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGithub, FaBars } from "react-icons/fa";
+import Link from 'next/link';
 
 export default function NavbarMid(): JSX.Element {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,17 +28,26 @@ export default function NavbarMid(): JSX.Element {
 
                         {/* Navigation links for larger screens */}
                         <div className="justify-start items-center gap-6 lg:flex hidden">
+                            <Link href="/Docs">
                             <div className="text-zinc-300 text-sm font-medium cursor-pointer hover:text-white transition-colors ">Document</div>
+                            </Link>
+                            <Link href="/Docs/button">
                             <div className="text-zinc-300 text-sm font-medium cursor-pointer hover:text-white transition-colors ">Components</div>
+                            </Link>
                         </div>
+
                     </div>
 
                     {/* Menu for smaller screens */}
                     {isMenuOpen && (
                         <div className="absolute top-20 left-0 w-full bg-zinc-950 text-white p-4 md:hidden">
                             <ul className="flex flex-col gap-4">
+                            <Link href="/Docs">
                                 <li className="cursor-pointer hover:text-gray-300" onClick={() => setIsMenuOpen(false)}>Document</li>
+                                </Link>
+                                <Link href="/Docs/button">
                                 <li className="cursor-pointer hover:text-gray-300" onClick={() => setIsMenuOpen(false)}>Components</li>
+                                </Link>
                             </ul>
                         </div>
                     )}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaGithub, FaXTwitter } from 'react-icons/fa6'
 import Logo from '../Assets/Logo'
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -8,9 +9,15 @@ export default function Footer() {
       <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
         <Logo />
         <nav className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+        <Link href="/Docs" >
           <span className='text-zinc-300 text-sm font-medium hover:text-white transition-colors cursor-pointer'>Document</span>
+          </Link>
+          <Link href="/Docs/button" >
           <span className='text-zinc-300 text-sm font-medium hover:text-white transition-colors cursor-pointer'>Components</span>
+          </Link>
+          <Link href="https://discord.gg/ZxGaAV7e" >
           <span className='text-zinc-300 text-sm font-medium hover:text-white transition-colors cursor-pointer'>Community</span>
+          </Link>
         </nav>
       </div>
       <div className="flex items-center gap-6">
