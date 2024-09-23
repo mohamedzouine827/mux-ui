@@ -1,12 +1,12 @@
 "use client"
 import React, { useState, useMemo } from 'react';
 
-interface HoverTextEffectProps {
+interface SplitTextProps {
   text: string;
   className?: string;
 }
 
-const HoverTextEffect: React.FC<HoverTextEffectProps> = ({ text, className = '' }) => {
+const SplitText: React.FC<SplitTextProps> = ({ text, className = '' }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const getRandomOffset = (min: number, max: number): number => {
@@ -63,4 +63,4 @@ const HoverTextEffect: React.FC<HoverTextEffectProps> = ({ text, className = '' 
   );
 };
 
-export default HoverTextEffect;
+export default SplitText;

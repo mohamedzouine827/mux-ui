@@ -25,7 +25,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ href, children }) => {
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="w-[250px] h-[962px] px-4 py-12 border-r border-[#8e8e8e]/30 flex-col justify-start items-start gap-2.5 inline-flex">
+    <div className="w-[250px] h-[962px] px-4 relative py-12 border-r border-[#8e8e8e]/30 flex-col justify-start items-start gap-2.5 inline-flex">
       <div className="flex-col justify-start items-start gap-12 flex">
         <div className="flex-col justify-start items-start gap-7 flex">
           <div className="text-slate-300 text-base font-semibold">Getting Started</div>
@@ -40,6 +40,7 @@ const Sidebar: React.FC = () => {
             <MenuItem href="/Docs/button">Button</MenuItem>
             <MenuItem href="/Docs/badge">Badge</MenuItem>
             <MenuItem href="/Docs/counter">Counter</MenuItem>
+            <MenuItem href="/Docs/splittext">Split Text</MenuItem>
           </div>
         </div>
       </div>
