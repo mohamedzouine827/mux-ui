@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, ReactNode, useRef } from "react";
+import React, { FC, ReactNode, useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 type RevealMode = 'GrayReveal' | 'ShadowReveal';
@@ -9,30 +9,50 @@ interface ScrollRevealProps {
   text: string;
   mode: RevealMode;
   className?: string;
-  marginTop?: string;  // User can control margin-top
-  marginBottom?: string;  // User can control margin-bottom
+  height?: string;
+  width?: string;
 }
 
-const ScrollReveal: FC<ScrollRevealProps> = ({ text, mode, className, marginTop = "0px", marginBottom = "0px" }) => {
+const ScrollReveal: FC<ScrollRevealProps> = ({ 
+  text, 
+  mode, 
+  className, 
+  height = "300px", 
+  width = "100%" 
+}) => {
   const words = text.split(" ");
   const containerClass = className || 'text-4xl font-bold text-black';
-  const targetRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollRange, setScrollRange] = useState({ start: 0, end: 1 });
 
-  // Get the scroll progress based on the target reference
   const { scrollYProgress } = useScroll({
-    target: targetRef,
+    target: containerRef,
+    offset: ["start end", "end start"]
   });
+
+  useEffect(() => {
+    const updateScrollRange = () => {
+      if (containerRef.current) {
+        const { scrollHeight, clientHeight } = containerRef.current;
+        const scrollRange = scrollHeight - clientHeight;
+        setScrollRange({ start: 0, end: scrollRange });
+      }
+    };
+
+    updateScrollRange();
+    window.addEventListener('resize', updateScrollRange);
+    return () => window.removeEventListener('resize', updateScrollRange);
+  }, []);
 
   return (
     <div
-      ref={targetRef}
-      className={`relative z-0 h-[200vh] ${containerClass}`}
-      style={{ marginTop, marginBottom }}  // Apply user-defined margin
+      ref={containerRef}
+      className={`relative z-0 overflow-auto ${containerClass}`}
+      style={{ height, width }}
     >
-      <div className="sticky top-0  flex  max-w-4xl items-center bg-transparent ">
+      <div className="sticky top-0 flex max-w-4xl items-center bg-transparent">
         <p className="flex flex-wrap text-2xl text-black/20 dark:text-white/20">
           {words.map((word, i) => {
-            // Calculate the reveal timing for each word
             const start = i / words.length;
             const end = start + 1 / words.length;
             return (
@@ -48,6 +68,7 @@ const ScrollReveal: FC<ScrollRevealProps> = ({ text, mode, className, marginTop 
           })}
         </p>
       </div>
+      <div style={{ height: "200%" }}></div>
     </div>
   );
 };
@@ -60,10 +81,7 @@ interface WordProps {
 }
 
 const Word: FC<WordProps> = ({ children, progress, range, mode }) => {
-  // Animate opacity based on scroll progress
   const opacity = useTransform(progress, range, [0, 1]);
-
-  // Define base opacity for the background effect (GrayReveal or ShadowReveal)
   const baseOpacity = mode === 'GrayReveal' ? 0.25 : 0;
 
   return (
