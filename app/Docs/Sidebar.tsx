@@ -41,6 +41,7 @@ const Sidebar: React.FC = () => {
             <MenuItem href="/Docs/badge">Badge</MenuItem>
             <MenuItem href="/Docs/counter">Counter</MenuItem>
             <MenuItem href="/Docs/splittext">Split Text</MenuItem>
+            <MenuItem href="/Docs/TextFlipper">Text Flipper</MenuItem>
           </div>
         </div>
       </div>
